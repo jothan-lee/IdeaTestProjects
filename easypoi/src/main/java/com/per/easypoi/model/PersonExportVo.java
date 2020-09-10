@@ -2,8 +2,7 @@ package com.per.easypoi.model;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.io.Serializable;
 import java.lang.annotation.Target;
@@ -15,6 +14,9 @@ import java.lang.annotation.Target;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class PersonExportVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
