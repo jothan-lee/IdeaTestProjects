@@ -1,4 +1,4 @@
-package com.per;
+package com.per.thread;
 
 /**
  * Hello world!
