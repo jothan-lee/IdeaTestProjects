@@ -17,6 +17,7 @@
 
     <modules>
         <module>easypoi</module>
+        <module>thread</module>
     </modules>
 
     <properties>
