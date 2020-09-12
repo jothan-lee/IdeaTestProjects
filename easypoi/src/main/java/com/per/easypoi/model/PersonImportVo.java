@@ -24,7 +24,7 @@ public class PersonImportVo {
      * 性别
      * 属性类型是String，因为excel传上来是String类型，虽然最后转化成0或者1
      */
-    @Excel(name = "性别", orderNum = "1", width = 15, replace = {"0_男", "1_女"})
+    @Excel(name = "性别", orderNum = "1", width = 15, replace = {"男_0", "女_1"})
     private String sex;
     /**
      * 登录用户名

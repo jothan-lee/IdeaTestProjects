@@ -2,6 +2,7 @@ package com.per.easypoi.controller;
 
 import cn.afterturn.easypoi.handler.inter.IExcelVerifyHandler;
 import com.per.easypoi.model.PersonExportVo;
+import com.per.easypoi.model.PersonImportVo;
 import com.per.easypoi.utils.ExcelUtils;
 import com.per.easypoi.utils.TalentImportVerifyHandler;
 import com.per.easypoi.utils.UrlFileToByte;
@@ -60,7 +61,13 @@ public class ExcelController {
         ExcelUtils.exportExcel(personList, "员工信息表", "员工信息", PersonExportVo.class, "员工信息", response);
     }
 
+    @RequestMapping(value = "/importTemplate", method = RequestMethod.POST)
+    public void importTemplate(HttpServletResponse response) throws IOException {
+        List<PersonImportVo> list = new ArrayList<>();
 
+        ExcelUtils.exportExcel(list, "员工信息表模板", "员工信息", PersonImportVo.class, "员工信息", response);
+
+    }
     /**
      * 导入
      *自定义校验excel
@@ -69,8 +76,8 @@ public class ExcelController {
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public Object importExcel(@RequestParam("file") MultipartFile file) throws IOException {
 
-    List<PersonExportVo> vos = ExcelUtils.importExcel(file,1,1, PersonExportVo.class,talentImportVerifyHandler);
-        for (PersonExportVo vo : vos) {
+    List<PersonImportVo> vos = ExcelUtils.importExcel(file,1,1, PersonImportVo.class,talentImportVerifyHandler);
+        for (PersonImportVo vo : vos) {
             if (StringUtils.isNotBlank(vo.getImageUrl())&&checkImage(vo.getImageUrl())) {
 
                 //上传到七牛云，返回URL地址
