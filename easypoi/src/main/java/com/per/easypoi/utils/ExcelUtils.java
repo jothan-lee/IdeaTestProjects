@@ -240,7 +240,7 @@ public class ExcelUtils {
         //NeedSave为true会通过SaveUrl设置的路径储存Excel和照片资源，反之不储存只储存照片资源
         //如果NeedSave为false，而SaveUrl不为null，则会只通过该路径储存照片资源
         params.setSaveUrl("/excel/");
-        params.setNeedSave(true);
+        params.setNeedSave(false);
         //NeedVerfiy和VerifyHandler互斥
         params.setNeedVerfiy(needVerfiy);
         params.setVerifyHandler(customVerify);
