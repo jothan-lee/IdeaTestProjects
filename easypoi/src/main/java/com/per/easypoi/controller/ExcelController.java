@@ -61,6 +61,11 @@ public class ExcelController {
         ExcelUtils.exportExcel(personList, "员工信息表", "员工信息", PersonExportVo.class, "员工信息", response);
     }
 
+    /**
+     * 导入模板导出
+     * @param response
+     * @throws IOException
+     */
     @RequestMapping(value = "/importTemplate", method = RequestMethod.POST)
     public void importTemplate(HttpServletResponse response) throws IOException {
         List<PersonImportVo> list = new ArrayList<>();
