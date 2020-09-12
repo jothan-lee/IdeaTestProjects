@@ -1,12 +1,11 @@
-package com.example.easypoi.utils;
+package com.per.easypoi.utils;
 
 import cn.afterturn.easypoi.excel.entity.result.ExcelVerifyHandlerResult;
 import cn.afterturn.easypoi.handler.inter.IExcelVerifyHandler;
-import com.example.easypoi.model.PersonExportVo;
+import com.per.easypoi.model.PersonExportVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import java.util.StringJoiner;
 
 @Component
 public class TalentImportVerifyHandler implements IExcelVerifyHandler<PersonExportVo> {
@@ -15,10 +14,14 @@ public class TalentImportVerifyHandler implements IExcelVerifyHandler<PersonExpo
 
     @Override
     public ExcelVerifyHandlerResult verifyHandler(PersonExportVo inputEntity) {
-        StringJoiner joiner = new StringJoiner(",");
-        // 根据姓名与手机号判断数据是否重复
-
-        return new ExcelVerifyHandlerResult(true);
+        ExcelVerifyHandlerResult result = new ExcelVerifyHandlerResult();
+        result.setSuccess(false);
+        if (StringUtils.isNotBlank(inputEntity.getImageUrl())) {
+            return result;
+        } else {
+            result.setSuccess(true);
+        }
+        return result;
     }
 
 

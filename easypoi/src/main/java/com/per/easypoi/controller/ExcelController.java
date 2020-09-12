@@ -1,16 +1,18 @@
-package com.example.easypoi.controller;
+package com.per.easypoi.controller;
 
-import com.example.easypoi.model.PersonExportVo;
-import com.example.easypoi.utils.ExcelUtils;
-import javafx.scene.image.Image;
+import cn.afterturn.easypoi.handler.inter.IExcelVerifyHandler;
+import com.per.easypoi.model.PersonExportVo;
+import com.per.easypoi.utils.ExcelUtils;
+import com.per.easypoi.utils.TalentImportVerifyHandler;
+import com.per.easypoi.utils.UrlFileToByte;
 import org.apache.commons.lang3.StringUtils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.Null;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,12 +24,18 @@ import java.util.Map;
 /**
  * excel 导出控制器
  *
- * @author novel
+ * @author lys
  * @date 2018/12/27
  */
 @RestController
 @RequestMapping("excel")
 public class ExcelController {
+
+    @Autowired
+    UrlFileToByte urlFileToByte;
+
+    @Autowired
+    TalentImportVerifyHandler talentImportVerifyHandler;
     /**
      * 导出
      *
@@ -36,53 +44,35 @@ public class ExcelController {
     @RequestMapping(value = "/export", method = RequestMethod.GET)
     public void exportExcel(HttpServletResponse response) throws IOException {
         List<PersonExportVo> personList = new ArrayList<>();
+        //用循环模拟数据库中的数据
         for (int i = 0; i < 5; i++) {
             PersonExportVo personVo = new PersonExportVo();
             personVo.setName("张三" + i);
             personVo.setUsername("张三" + i);
             personVo.setPhoneNumber("18888888888");
-            personVo.setImageUrl("/static/user1-128x128.jpg");
+            personVo.setSex(0);
+            //此路径可以是相对路径，也可以是绝对路径
+            personVo.setImageUrl("C:\\Users\\Administrator\\Desktop\\图片\\111.jpg");
+            //通过工具类拿到网络路径的图片的byte数组
+            personVo.setUrlToPicture(urlFileToByte.getImageFromURL("http://mgjtest.4000750222.com/mgjtesteQuSJfRLnxJl.jpg"));
             personList.add(personVo);
         }
         ExcelUtils.exportExcel(personList, "员工信息表", "员工信息", PersonExportVo.class, "员工信息", response);
     }
 
-    /**
-     * 导出excel
-     *
-     * @return 结果
-     */
-    @GetMapping("/exportToFile")
-    public Map<String, Object> export() {
-        List<PersonExportVo> personList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            PersonExportVo personVo = new PersonExportVo();
-            personVo.setName("张三" + i);
-            personVo.setUsername("张三" + i);
-            personVo.setPhoneNumber("18888888888");
-            personVo.setImageUrl("/static/user1-128x128.jpg");
-            personList.add(personVo);
-        }
-        String fileName = ExcelUtils.exportExcelToFile(personList, "员工信息", PersonExportVo.class);
-        Map<String, Object> map = new HashMap<>();
-        map.put("fileName", fileName);
-        return map;
-    }
 
     /**
      * 导入
-     *
+     *自定义校验excel
      * @param file
      */
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public Object importExcel(@RequestParam("file") MultipartFile file) throws IOException {
 
-
-        List<PersonExportVo> vos = ExcelUtils.importExcel(file, PersonExportVo.class);
+    List<PersonExportVo> vos = ExcelUtils.importExcel(file,1,1, PersonExportVo.class,talentImportVerifyHandler);
         for (PersonExportVo vo : vos) {
             if (StringUtils.isNotBlank(vo.getImageUrl())&&checkImage(vo.getImageUrl())) {
 
-                //转换成base64
                 //上传到七牛云，返回URL地址
                 //setImageUrl(URL)
                 File file1 = new File(vo.getImageUrl());
@@ -92,8 +82,9 @@ public class ExcelController {
                 }
             }
         }
-        return vos;
+        return null;
     }
+
 
     /**
      *
