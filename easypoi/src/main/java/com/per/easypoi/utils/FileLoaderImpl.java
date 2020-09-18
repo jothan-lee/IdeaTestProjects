@@ -1,5 +1,4 @@
-
-package com.per.easypoi.utils;
+package com.example.easypoi.utils;
 
 import cn.afterturn.easypoi.cache.manager.IFileLoader;
 import org.apache.poi.util.IOUtils;
@@ -15,12 +14,11 @@ import java.net.URLConnection;
 
 
 /**
- * 文件加载类,根据路径加载指定文件
- *
- * @author lys
- * @date 2018/12/18
+ * @Description: TODO 文件加载类,根据路径加载指定文件
+ * @Author: lys
+ * @Date: 2020-09-12 14:11
+ * @Version: 1.3.*
  */
-
 public class FileLoaderImpl implements IFileLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(cn.afterturn.easypoi.cache.manager.FileLoaderImpl.class);

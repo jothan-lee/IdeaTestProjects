@@ -19,12 +19,10 @@
     <name>easypoi</name>
     <description>Demo project for Spring Boot</description>
     <dependencies>
-        <!--easypoi-->
-        <!--excel操作-->
         <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-spring-boot-starter</artifactId>
-            <version>3.3.0</version>
+            <version>4.1.2</version>
         </dependency>
         <!--<dependency>
             <groupId>org.springframework.boot</groupId>
