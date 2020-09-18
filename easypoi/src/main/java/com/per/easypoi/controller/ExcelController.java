@@ -3,6 +3,7 @@ package com.per.easypoi.controller;
 import cn.afterturn.easypoi.handler.inter.IExcelVerifyHandler;
 import com.per.easypoi.model.PersonExportVo;
 import com.per.easypoi.model.PersonImportVo;
+import com.per.easypoi.utils.BigDataExport;
 import com.per.easypoi.utils.ExcelUtils;
 import com.per.easypoi.utils.TalentImportVerifyHandler;
 import com.per.easypoi.utils.UrlFileToByte;
@@ -37,6 +38,8 @@ public class ExcelController {
 
     @Autowired
     TalentImportVerifyHandler talentImportVerifyHandler;
+    @Autowired
+    BigDataExport bigDataExport;
     /**
      * 导出
      *
@@ -55,7 +58,7 @@ public class ExcelController {
             //此路径可以是相对路径，也可以是绝对路径
             personVo.setImageUrl("C:\\Users\\Administrator\\Desktop\\图片\\111.jpg");
             //通过工具类拿到网络路径的图片的byte数组
-            personVo.setUrlToPicture(urlFileToByte.getImageFromURL("http://mgjtest.4000750222.com/mgjtesteQuSJfRLnxJl.jpg"));
+            //personVo.setUrlToPicture(urlFileToByte.getImageFromURL("http://mgjtest.4000750222.com/mgjtesteQuSJfRLnxJl.jpg"));
             personList.add(personVo);
         }
         ExcelUtils.exportExcel(personList, "员工信息表", "员工信息", PersonExportVo.class, "员工信息", response);
@@ -81,8 +84,8 @@ public class ExcelController {
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public Object importExcel(@RequestParam("file") MultipartFile file) throws IOException {
 
-    List<PersonImportVo> vos = ExcelUtils.importExcel(file,1,1, PersonImportVo.class,talentImportVerifyHandler);
-        for (PersonImportVo vo : vos) {
+     /* List<PersonImportVo> vos = ExcelUtils.importExcel(file,1,1, PersonImportVo.class,talentImportVerifyHandler);
+      for (PersonImportVo vo : vos) {
             if (StringUtils.isNotBlank(vo.getImageUrl())&&checkImage(vo.getImageUrl())) {
 
                 //上传到七牛云，返回URL地址
@@ -93,7 +96,7 @@ public class ExcelController {
                     file1.delete();
                 }
             }
-        }
+        }*/
         return null;
     }
 
@@ -117,6 +120,19 @@ public class ExcelController {
             valid=false;
         }
         return valid;
+    }
+
+    /**
+     * 大数据量导出
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping(value = "/exportBigExcel", method = RequestMethod.POST)
+    public void exportBigExcel(HttpServletResponse response) throws IOException {
+        Long start = System.currentTimeMillis();
+        ExcelUtils.exportBigExcel("test", "sheet", bigDataExport, PersonExportVo.class, response, Long.toBinaryString(System.currentTimeMillis()), true, null);
+        Long end = System.currentTimeMillis();
+        System.out.println("共耗时"+(end-start)/1000.0+"s");
     }
 
 }

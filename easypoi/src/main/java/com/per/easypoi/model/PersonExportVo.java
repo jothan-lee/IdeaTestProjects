@@ -44,7 +44,7 @@ public class PersonExportVo implements Serializable {
      * 通过本地拿人脸图片
      * type 类型为2
      */
-    @Excel(name = "人脸图片1", orderNum = "4", width = 15, height = 30, type = 2, imageType = 1)
+    @Excel(name = "人脸图片1", orderNum = "4", width = 15, height = 30)
     private String imageUrl;
 
     /**
@@ -52,6 +52,6 @@ public class PersonExportVo implements Serializable {
      * 这个imageType必须为2，要不然报错
      * 属性类型为byte数组
      */
-    @Excel(name = "人脸图片2", orderNum = "5", width = 15, height = 30, type = 2, imageType = 2)
-    private byte[] urlToPicture;
+   /* @Excel(name = "人脸图片2", orderNum = "5", width = 15, height = 30, type = 2, imageType = 2)
+    private byte[] urlToPicture;*/
 }

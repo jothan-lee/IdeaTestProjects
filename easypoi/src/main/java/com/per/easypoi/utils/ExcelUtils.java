@@ -238,6 +238,7 @@ public class ExcelUtils {
             response.setHeader("content-Type", "application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName + "." + ExcelTypeEnum.XLSX.getValue(), "UTF-8"));
             workbook.write(response.getOutputStream());
+            workbook.close();
         } catch (Exception e) {
             throw new IOException(e.getMessage());
         }
