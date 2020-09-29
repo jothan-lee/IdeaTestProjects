@@ -22,6 +22,7 @@ public class MyThreadPool {
         service1.execute(new MyRunnable());
         service1.shutdown();
 
+
         //有返回值的线程池1
         ExecutorService service3 = Executors.newFixedThreadPool(5);
         Future<?> result1 = service3.submit(new MyCallable());
