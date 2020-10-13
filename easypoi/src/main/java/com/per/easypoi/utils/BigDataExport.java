@@ -17,8 +17,8 @@ public class BigDataExport implements IExcelExportServer {
     @Override
     public List<Object> selectListForExcelExport(Object queryParams, int page) {
         List<PersonExportVo> vos = new ArrayList<>();
-        if (page < 20) {
-            for (int i = 0; i < 10000; i++) {
+        if (page < 2) {
+            for (int i = 0; i < 100; i++) {
                 PersonExportVo vo = new PersonExportVo();
                 vo.setName("测试数据"+page*i);
                 vo.setSex(1);

@@ -84,7 +84,7 @@ public class ExcelController {
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public Object importExcel(@RequestParam("file") MultipartFile file) throws IOException {
 
-     /* List<PersonImportVo> vos = ExcelUtils.importExcel(file,1,1, PersonImportVo.class,talentImportVerifyHandler);
+      List<PersonImportVo> vos = ExcelUtils.importExcel(file,1,1, PersonImportVo.class,talentImportVerifyHandler);
       for (PersonImportVo vo : vos) {
             if (StringUtils.isNotBlank(vo.getImageUrl())&&checkImage(vo.getImageUrl())) {
 
@@ -96,7 +96,7 @@ public class ExcelController {
                     file1.delete();
                 }
             }
-        }*/
+        }
         return null;
     }
 

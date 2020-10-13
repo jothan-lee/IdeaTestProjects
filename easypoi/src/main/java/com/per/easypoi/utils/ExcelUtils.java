@@ -6,6 +6,7 @@ import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.afterturn.easypoi.handler.inter.IExcelExportServer;
+import cn.afterturn.easypoi.handler.inter.IExcelVerifyHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.multipart.MultipartFile;
@@ -273,29 +274,31 @@ public class ExcelUtils {
     }
 
     /**
-     * excel 导入
+     * excel 导入 不使用常规校验
      *
      * @param file      excel文件
      * @param pojoClass pojo类型
      * @param <T>
+     * @param iExcelVerifyHandler 自定义校验 不使用设置为null
      * @return
      */
-    public static <T> List<T> importExcel(MultipartFile file, Class<T> pojoClass) throws IOException {
-        return importExcel(file, 1, 1, pojoClass);
+    public static <T> List<T> importExcel(MultipartFile file, Class<T> pojoClass,IExcelVerifyHandler iExcelVerifyHandler) throws IOException {
+        return importExcel(file, 1, 1, pojoClass,iExcelVerifyHandler);
     }
 
     /**
-     * excel 导入
+     * excel 导入 不使用常规校验
      *
      * @param file       excel文件
      * @param titleRows  标题行
      * @param headerRows 表头行
      * @param pojoClass  pojo类型
      * @param <T>
+     * @param iExcelVerifyHandler 自定义校验 不使用设置为null
      * @return
      */
-    public static <T> List<T> importExcel(MultipartFile file, Integer titleRows, Integer headerRows, Class<T> pojoClass) throws IOException {
-        return importExcel(file, titleRows, headerRows, false, pojoClass);
+    public static <T> List<T> importExcel(MultipartFile file, Integer titleRows, Integer headerRows, Class<T> pojoClass,IExcelVerifyHandler iExcelVerifyHandler) throws IOException {
+        return importExcel(file, titleRows, headerRows, false, pojoClass, iExcelVerifyHandler);
     }
 
     /**
@@ -304,17 +307,18 @@ public class ExcelUtils {
      * @param file       上传的文件
      * @param titleRows  标题行
      * @param headerRows 表头行
-     * @param needVerify 是否检验excel内容
+     * @param needVerify 是否检验excel内容 不使用设置为false
      * @param pojoClass  pojo类型
      * @param <T>
+     * @param iExcelVerifyHandler 自定义校验 不使用设置为null
      * @return
      */
-    public static <T> List<T> importExcel(MultipartFile file, Integer titleRows, Integer headerRows, boolean needVerify, Class<T> pojoClass) throws IOException {
+    public static <T> List<T> importExcel(MultipartFile file, Integer titleRows, Integer headerRows, boolean needVerify, Class<T> pojoClass,IExcelVerifyHandler iExcelVerifyHandler) throws IOException {
         if (file == null) {
             return null;
         }
         try {
-            return importExcel(file.getInputStream(), titleRows, headerRows, needVerify, pojoClass);
+            return importExcel(file.getInputStream(), titleRows, headerRows, needVerify, pojoClass, iExcelVerifyHandler);
         } catch (Exception e) {
             throw new IOException(e.getMessage());
         }
@@ -326,21 +330,25 @@ public class ExcelUtils {
      * @param inputStream 文件输入流
      * @param titleRows   标题行
      * @param headerRows  表头行
-     * @param needVerify  是否检验excel内容
+     * @param needVerify  是否检验excel内容  不使用设置为false
      * @param pojoClass   pojo类型
      * @param <T>
+     * @param iExcelVerifyHandler 自定义校验  不使用设置为null
      * @return
      */
-    public static <T> List<T> importExcel(InputStream inputStream, Integer titleRows, Integer headerRows, boolean needVerify, Class<T> pojoClass) throws IOException {
+    public static <T> List<T> importExcel(InputStream inputStream, Integer titleRows, Integer headerRows, boolean needVerify, Class<T> pojoClass,IExcelVerifyHandler iExcelVerifyHandler) throws IOException {
         if (inputStream == null) {
             return null;
         }
         ImportParams params = new ImportParams();
-        params.setTitleRows(0);
+        params.setTitleRows(titleRows);
         params.setHeadRows(headerRows);
         params.setSaveUrl("excel/");
         params.setNeedSave(false);
+        //检验，不使用设置为false
         params.setNeedVerify(needVerify);
+        //自定义检验，不使用设置为null
+        params.setVerifyHandler(iExcelVerifyHandler);
         try {
             return ExcelImportUtil.importExcel(inputStream, pojoClass, params);
         } catch (NoSuchElementException e) {
