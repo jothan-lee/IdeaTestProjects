@@ -19,8 +19,11 @@ public class MyRunnable implements Runnable{
         //对两个实现类分别启动一个线程
         MyRunnable myRunnable = new MyRunnable();
         Thread thread = new Thread(myRunnable);
+        Thread thread1 = new Thread(myRunnable);
         thread.setName("我是实现runnable接口创建的线程");
         thread.start();
+        thread1.setName("我是实现runnable接口创建的线程一");
+        thread1.start();
 
         MyRunnable2 myRunnable2 = new MyRunnable2();
         Thread thread2 = new Thread(myRunnable2);
