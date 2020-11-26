@@ -29,6 +29,6 @@ public class InetAddrezz {
         boolean b = inetAddress.isReachable(1000);
         System.out.println(b);
 
-        InetAddress address = InetAddress.getByAddress("180.101.49.12");
+        //InetAddress address = InetAddress.getByAddress("180.101.49.12");
     }
 }

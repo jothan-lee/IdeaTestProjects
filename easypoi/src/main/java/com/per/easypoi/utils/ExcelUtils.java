@@ -19,8 +19,8 @@ import java.util.*;
 /**
  * excel 工具类
  *
- * @author novel
- * @date 2018/12/14
+ * @author lys
+ * @date 2020/11/14
  */
 public class ExcelUtils {
     /**
@@ -343,7 +343,9 @@ public class ExcelUtils {
         ImportParams params = new ImportParams();
         params.setTitleRows(titleRows);
         params.setHeadRows(headerRows);
+        //保存传上来的excel，图片的路径
         params.setSaveUrl("excel/");
+        //是否保存传上来的excel，图片，false表示不保存
         params.setNeedSave(false);
         //检验，不使用设置为false
         params.setNeedVerify(needVerify);
