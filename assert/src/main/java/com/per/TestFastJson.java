@@ -6,7 +6,7 @@ package com.per;
  * @Date: 2020-11-06 13:46
  * @Version: 1.3.*
  */
-public class testAssert {
+public class TestFastJson {
 
 
     public static void main(String[] args) {
