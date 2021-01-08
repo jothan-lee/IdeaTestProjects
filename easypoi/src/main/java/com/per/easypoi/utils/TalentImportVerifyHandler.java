@@ -17,7 +17,11 @@ import org.springframework.stereotype.Component;
 public class TalentImportVerifyHandler implements IExcelVerifyHandler<PersonImportVo> {
 
 
-
+    /**
+     *
+     * @param inputEntity
+     * @return result.setSuccess(true); 通过校验。 result.setSuccess(false);跳过该条数据
+     */
     @Override
     public ExcelVerifyHandlerResult verifyHandler(PersonImportVo inputEntity) {
         ExcelVerifyHandlerResult result = new ExcelVerifyHandlerResult();
@@ -25,6 +29,7 @@ public class TalentImportVerifyHandler implements IExcelVerifyHandler<PersonImpo
         if (StringUtils.isNotBlank(inputEntity.getImageUrl())) {
             //通过校验
             result.setSuccess(true);
+
         } else {
             //未通过校验，忽略此行数据
             result.setSuccess(false);
