@@ -9,6 +9,8 @@ public class Deadlock {
         Thread b = new Thread(new Lock2());
         a.start();
         b.start();
+
+
     }
 }
 class Lock1 implements Runnable{
