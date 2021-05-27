@@ -1,0 +1,7 @@
+第一点：ideaTestProjects是一个归纳所有项目的总项目名，在2021年5月27日止他下面的子项目包括easypoi，thread，network，1MinorFunctionTest，
+       只为这些子项目提供了简单maven依赖
+第二点：在2021年5月27日以后ideaTestProjects还是作为归纳所有项目的总项目名，但是新创建的项目不在依赖于他，而是相互独立
+第三点：互相独立项目创建步骤：点击ideaTestProjects项目名字（或者file的tab）——》左键——》选择new——》module——》在创建新的项目中Parate选项选择none，
+       这样就没有任何依赖关系。
+第四点：如果创建的独立项目下想要创建子项目，步骤：点击你想要在哪个独立项目下创建子项目的项目——》左键——》选择new——》module——》在创建新的项目中Parate选项选择你想在哪个独立项目下
+       创建子项目的项目pom名字即可，这样创建的新项目就是选择pom文件项目下的子项目

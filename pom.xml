@@ -19,8 +19,8 @@
     <modules>
         <module>easypoi</module>
         <module>thread</module>
-        <module>assert</module>
         <module>network</module>
+        <module>1MinorFunctionTest</module>
     </modules>
 
     <properties>
@@ -32,7 +32,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
